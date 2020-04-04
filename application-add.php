@@ -11,6 +11,7 @@ if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reas
     $date_to = $_POST['date_to'];
     $reason = $_POST['reason'];
     $user_id = $_SESSION['id'];
+    $user_full_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
 
     require_once 'db-connect.php';
 
@@ -18,6 +19,8 @@ if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reas
     $results->bind_param("sssi", $date_from, $date_to, $reason, $user_id);
     $results->execute();
     $results->close();
+
+    //TODO: send e-mail to administrator for approving/rejection
 
     header('Location: applications.php');
     exit;

@@ -53,11 +53,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != true) {
                     } else {
                         $class = '';
                     }
+                    $vacation_start_converted = date('d-m-Y', strtotime($vacation_start));
+                    $vacation_end_converted = date('d-m-Y', strtotime($vacation_end));
                     ?>
 
                     <tr class="<?= $class ?>">
                         <td><?= $created_on ?></td>
-                        <td><?= "{$vacation_start} to {$vacation_end}" ?></td>
+                        <td><?= "{$vacation_start_converted} to {$vacation_end_converted}" ?></td>
                         <td><?= $status ?></td>
                     </tr>
 
