@@ -9,7 +9,9 @@
 
         </div>
 
-        <a class="btn btn-primary" href="logout.php" role="button">Log out</a>
+        <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) { ?>
+            <a class="btn btn-primary" href="logout.php" role="button">Log out</a>
+        <?php } ?>
 
     </div>
 </nav>

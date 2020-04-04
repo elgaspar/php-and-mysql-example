@@ -6,6 +6,9 @@
 </head>
 
 <body>
+
+    <?php include 'navbar.php'; ?>
+
     <div class="container p-3">
 
         <div class="row justify-content-center">
