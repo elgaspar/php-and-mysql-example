@@ -11,10 +11,10 @@
 
     <div class="container p-3">
 
+        <h3 class="text-center mb-5">Login</h3>
+
         <div class="row justify-content-center">
             <div class="col-sm-8 col-md-6 col-lg-4">
-
-                <h3 class="text-center mb-5">Login</h3>
 
                 <form action="authenticate.php" method="post">
                     <div class="form-group">

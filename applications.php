@@ -21,7 +21,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != true) {
     <div class="container p-3">
 
         <h3 class="text-center mb-5">Applications</h3>
-        <a class="btn btn-primary mb-2" href="application-add.php" role="button">Submit Request</a>
+        <a class="btn btn-primary mb-2" href="application-add.php" role="button">Submit Application</a>
 
         <table class="table">
             <thead class="thead-dark">
@@ -35,7 +35,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != true) {
 
                 <?php
 
-                $user_id = $_SESSION['id'] . '<br>';
+                $user_id = $_SESSION['id'];
 
                 require_once 'db-connect.php';
 
