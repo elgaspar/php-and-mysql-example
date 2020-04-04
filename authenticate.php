@@ -18,8 +18,9 @@ $results->bind_result($id, $password_hash, $first_name, $last_name, $user_type);
 $results->fetch();
 $results->close();
 
+session_start();
+
 if (password_verify($password, $password_hash)) {
-    session_start();
     $_SESSION['logged_in'] = true;
     $_SESSION['id'] = $id;
     $_SESSION['email'] = $email;
@@ -30,6 +31,7 @@ if (password_verify($password, $password_hash)) {
     header('Location: applications.php');
     exit;
 } else {
+    $_SESSION['login_error'] = true;
     header('Location: index.php');
     exit;
 }
