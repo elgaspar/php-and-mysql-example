@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-    <?php include 'header.php'; ?>
-</head>
+session_start();
 
-<body>
-    <div class="container p-3">
-        a
-    </div>
-</body>
-
-</html>
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+    header('Location: applications.php');
+    exit;
+} else {
+    header('Location: login.php');
+    exit;
+}
