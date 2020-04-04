@@ -1,8 +1,10 @@
 <?php
 session_start();
 
-
-
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != true) {
+    header('Location: login.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,35 +20,54 @@ session_start();
 
     <div class="container p-3">
 
-        <?php
+        <h3 class="text-center mb-5">Applications</h3>
+        <a class="btn btn-primary mb-2" href="application-add.php" role="button">Submit Request</a>
 
-        // echo $_SESSION['logged_in'] . '<br>';
-        $user_id = $_SESSION['id'] . '<br>';
-        // echo $_SESSION['email'] . '<br>';
-        // echo $_SESSION['first_name'] . '<br>';
-        // echo $_SESSION['last_name'] . '<br>';
-        // echo $_SESSION['user_type'] . '<br>';
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Created On</th>
+                    <th scope="col">Requested Dates</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
 
+                <?php
 
-        require_once 'db-connect.php';
+                $user_id = $_SESSION['id'] . '<br>';
 
-        $results = $db_connection->prepare("SELECT created_on, vacation_start, vacation_end, status FROM applications WHERE user_id = ?");
-        $results->bind_param("i", $user_id);
-        $results->execute();
-        $results->store_result();
-        $results->bind_result($created_on, $vacation_start, $vacation_end, $status);
+                require_once 'db-connect.php';
 
-        while ($results->fetch()) {
-            echo "{$created_on}<br>{$vacation_start}<br>{$vacation_end}<br>{$status}<br><br>";
-        }
-        $results->close();
+                $results = $db_connection->prepare("SELECT created_on, vacation_start, vacation_end, status FROM applications WHERE user_id = ? ORDER BY created_on DESC");
+                $results->bind_param("i", $user_id);
+                $results->execute();
+                $results->store_result();
+                $results->bind_result($created_on, $vacation_start, $vacation_end, $status);
 
+                while ($results->fetch()) {
+                    if ($status == 'approved') {
+                        $class = 'table-success';
+                    } else if ($status == 'rejected') {
+                        $class = 'table-danger';
+                    } else {
+                        $class = '';
+                    }
+                    ?>
 
+                    <tr class="<?= $class ?>">
+                        <td><?= $created_on ?></td>
+                        <td><?= "{$vacation_start} to {$vacation_end}" ?></td>
+                        <td><?= $status ?></td>
+                    </tr>
 
+                <?php
+                }
+                $results->close();
+                ?>
 
-
-        ?>
-
+            </tbody>
+        </table>
 
     </div>
 </body>
