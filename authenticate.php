@@ -10,7 +10,7 @@ $password = $_POST['password'];
 
 require_once 'db-connect.php';
 
-$results = $db_connection->prepare("SELECT id, password, firstname, lastname, usertype FROM users WHERE email = ?");
+$results = $db_connection->prepare("SELECT id, password, first_name, last_name, user_type FROM users WHERE email = ?");
 $results->bind_param("s", $email);
 $results->execute();
 $results->store_result();
