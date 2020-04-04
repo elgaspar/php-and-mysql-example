@@ -1,13 +1,10 @@
 <?php
 
-$DB_HOST = '';
-$DB_USER = '';
-$DB_PASS = '';
-$DB_NAME = '';
+$config = parse_ini_file('config.ini');
 
-$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+$db_connection = mysqli_connect($config['db_host'], $config['db_user'], $config['db_password'], $config['db_name']);
 
-if (!$link) {
+if (!$db_connection) {
     echo "Database connection error: " . mysqli_connect_error();
     exit;
 }
