@@ -1,24 +1,28 @@
 <?php
+
+declare(strict_types=1);
+
 session_start();
 
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != true) {
-    header('Location: login.php');
+require_once 'inc/class-session.php';
+require_once 'inc/class-application.php';
+require_once 'inc/class-database.php';
+
+if (!Session::is_logged_in() || !Session::is_employee()) {
+    header('Location: index.php');
     exit;
 }
 
 if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reason'])) {
-    $date_from = $_POST['date_from'];
-    $date_to = $_POST['date_to'];
-    $reason = $_POST['reason'];
-    $user_id = $_SESSION['id'];
-    $user_full_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
+    $new_application_data = array(
+        'vacation_start' =>  $_POST['date_from'],
+        'vacation_end' => $_POST['date_to'],
+        'reason' => $_POST['reason'],
+        'user_id' => $_SESSION['id'],
+    );
 
-    require_once 'db-connect.php';
-
-    $results = $db_connection->prepare("INSERT INTO applications (vacation_start, vacation_end, reason, user_id) VALUES (?, ?, ?, ?)");
-    $results->bind_param("sssi", $date_from, $date_to, $reason, $user_id);
-    $results->execute();
-    $results->close();
+    $application = new Application($new_application_data);
+    Database::add_application($application);
 
     //TODO: send e-mail to administrator for approving/rejection
 

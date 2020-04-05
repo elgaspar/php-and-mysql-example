@@ -1,11 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+require_once 'inc/class-session.php';
+
 session_start();
 
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-    header('Location: applications.php');
-    exit;
-} else {
+if (!Session::is_logged_in()) {
     header('Location: login.php');
     exit;
 }
+
+if (Session::is_admin()) {
+    header('Location: users.php');
+    exit;
+}
+
+header('Location: applications.php');
+exit;

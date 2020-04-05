@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+require_once 'inc/class-utilities.php';
+
 if (!isset($_POST['email'], $_POST['password'])) {
     header('Location: login.php');
     exit;
@@ -8,30 +12,24 @@ if (!isset($_POST['email'], $_POST['password'])) {
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-require_once 'db-connect.php';
 
-$results = $db_connection->prepare("SELECT id, password, first_name, last_name, user_type FROM users WHERE email = ?");
-$results->bind_param("s", $email);
-$results->execute();
-$results->store_result();
-$results->bind_result($id, $password_hash, $first_name, $last_name, $user_type);
-$results->fetch();
-$results->close();
 
 session_start();
 
-if (password_verify($password, $password_hash)) {
+$user = Utilities::user_login($email, $password);
+if ($user) {
     $_SESSION['logged_in'] = true;
-    $_SESSION['id'] = $id;
-    $_SESSION['email'] = $email;
-    $_SESSION['first_name'] = $first_name;
-    $_SESSION['last_name'] = $last_name;
-    $_SESSION['user_type'] = $user_type;
+    $_SESSION['id'] = $user->get_id();
+    $_SESSION['email'] = $user->get_email();
+    $_SESSION['first_name'] = $user->get_first_name();
+    $_SESSION['last_name'] = $user->get_last_name();
+    $_SESSION['is_admin'] = $user->is_admin();
 
     header('Location: applications.php');
     exit;
 } else {
     $_SESSION['login_error'] = true;
-    header('Location: index.php');
+
+    header('Location: login.php');
     exit;
 }
