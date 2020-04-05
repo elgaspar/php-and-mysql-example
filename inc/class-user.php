@@ -15,12 +15,39 @@ class User
 
     public function __construct(array $data)
     {
-        $this->id = $data['id'] ?? -1;
-        $this->first_name = $data['first_name'] ?? '';
-        $this->last_name = $data['last_name'] ?? '';
-        $this->email = $data['email'] ?? '';
-        $this->password_hash = $data['password_hash'] ?? '';
-        $this->is_admin = $data['is_admin'] ? true : false;
+        $this->id = -1;
+        $this->first_name = '';
+        $this->last_name = '';
+        $this->email = '';
+        $this->password_hash = '';
+        $this->is_admin = false;
+
+        $this->set_data_array($data);
+    }
+
+
+    public function get_data_array(): array
+    {
+        return array(
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'password_hash' => $this->password_hash,
+            'is_admin' => $this->is_admin
+        );
+    }
+
+    public function set_data_array(array $data): void
+    {
+        $this->id = $data['id'] ?? $this->id;
+        $this->first_name = $data['first_name'] ?? $this->first_name;
+        $this->last_name = $data['last_name'] ?? $this->last_name;
+        $this->email = $data['email'] ?? $this->email;
+        $this->password_hash = $data['password_hash'] ?? $this->password_hash;
+        if (isset($data['is_admin'])) {
+            $this->is_admin = $data['is_admin'] ? true : false;
+        }
     }
 
     public function get_id(): int

@@ -15,13 +15,39 @@ class Application
 
     public function __construct(array $data)
     {
-        $this->id = $data['id'] ?? -1;
-        $this->vacation_start = $data['vacation_start'] ?? '';
-        $this->vacation_end = $data['vacation_end'] ?? '';
-        $this->reason = $data['reason'] ?? '';
-        $this->user_id = $data['user_id'] ?? -1;
-        $this->status = $data['status'] ?? '';
-        $this->created_on = $data['created_on'] ?? '';
+        $this->id = -1;
+        $this->vacation_start = '';
+        $this->vacation_end = '';
+        $this->reason = '';
+        $this->user_id = -1;
+        $this->status = '';
+        $this->created_on = '';
+
+        $this->set_data_array($data);
+    }
+
+    public function get_data_array(): array
+    {
+        return array(
+            'id' => $this->id,
+            'vacation_start' => $this->vacation_start,
+            'vacation_end' => $this->vacation_end,
+            'reason' => $this->reason,
+            'user_id' => $this->user_id,
+            'status' => $this->status,
+            'created_on' => $this->created_on
+        );
+    }
+
+    public function set_data_array(array $data): void
+    {
+        $this->id = $data['id'] ?? $this->id;
+        $this->vacation_start = $data['vacation_start'] ?? $this->vacation_start;
+        $this->vacation_end = $data['vacation_end'] ?? $this->vacation_end;
+        $this->reason = $data['reason'] ?? $this->reason;
+        $this->user_id = $data['user_id'] ?? $this->user_id;
+        $this->status = $data['status'] ?? $this->status;
+        $this->created_on = $data['created_on'] ?? $this->created_on;
     }
 
     public function get_id(): int

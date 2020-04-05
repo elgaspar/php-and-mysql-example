@@ -20,9 +20,34 @@ if (!Session::is_logged_in() || !Session::is_admin()) {
 <a class="btn btn-primary mb-2" href="user-form.php" role="button">Create User</a>
 
 
-<?php
-//TODO
-?>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">User Type</th>
+        </tr>
+    </thead>
+    <tbody>
 
+        <?php
+        $user_id = $_SESSION['id'];
+        $all_users = Database::get_all_users();
+        foreach ($all_users as $user) {
+            $onclick = "window.location='user-form.php?id={$user->get_id()}';";
+        ?>
+
+            <tr class="user-row" onclick="<?= $onclick ?>">
+                <td><?= $user->get_first_name() ?></td>
+                <td><?= $user->get_last_name() ?></td>
+                <td><?= $user->get_email() ?></td>
+                <td><?= $user->is_admin() ? 'admin' : 'employee' ?></td>
+            </tr>
+
+        <?php } ?>
+
+    </tbody>
+</table>
 
 <?php include 'template-end.php'; ?>

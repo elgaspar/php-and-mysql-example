@@ -57,9 +57,9 @@ if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reas
                 <textarea class="form-control" name="reason" id="reason" rows="3" required="required"></textarea>
             </div>
 
-            <a class="btn btn-secondary" href="applications.php" role="button" style="width: 100px;">Back</a>
+            <a class="btn btn-secondary form-button" href="applications.php" role="button">Back</a>
 
-            <button type="submit" class="btn btn-primary float-right w-10" style="width: 100px;">Submit</button>
+            <button type="submit" class="btn btn-primary float-right w-10 form-button">Submit</button>
 
         </form>
 
