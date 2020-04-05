@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once 'inc/enum-user-type.php';
+
 
 class User
 {
@@ -78,5 +80,13 @@ class User
     public function is_admin(): bool
     {
         return $this->is_admin;
+    }
+
+    public function get_user_type(): string
+    {
+        if ($this->is_admin()) {
+            return UserType::ADMIN;
+        }
+        return UserType::EMPLOYEE;
     }
 }

@@ -7,6 +7,8 @@ session_start();
 require_once 'inc/class-session.php';
 require_once 'inc/class-database.php';
 require_once 'inc/class-user.php';
+require_once 'inc/enum-user-type.php';
+
 
 if (!Session::is_logged_in() || !Session::is_admin()) {
     header('Location: index.php');
@@ -96,8 +98,8 @@ if (isset($user)) {
             <div class="form-group">
                 <label for="user_type">User Type:</label>
                 <select class="form-control" id="user_type" name="user_type">
-                    <option <?= isset($is_admin) && !$is_admin ? 'selected' : '' ?> value="employee">Employee</option>
-                    <option <?= isset($is_admin) && $is_admin ? 'selected' : '' ?> value="admin">Admin</option>
+                    <option <?= isset($is_admin) && !$is_admin ? 'selected' : '' ?> value="<?= UserType::EMPLOYEE ?>"><?= ucfirst(UserType::EMPLOYEE) ?></option>
+                    <option <?= isset($is_admin) && $is_admin ? 'selected' : '' ?> value="<?= UserType::ADMIN ?>"><?= ucfirst(UserType::ADMIN) ?></option>
                 </select>
             </div>
 

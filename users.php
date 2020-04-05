@@ -42,7 +42,7 @@ if (!Session::is_logged_in() || !Session::is_admin()) {
                 <td><?= $user->get_first_name() ?></td>
                 <td><?= $user->get_last_name() ?></td>
                 <td><?= $user->get_email() ?></td>
-                <td><?= $user->is_admin() ? 'admin' : 'employee' ?></td>
+                <td><?= ucfirst($user->get_user_type()) ?></td>
             </tr>
 
         <?php } ?>

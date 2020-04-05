@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once 'enum-application-status.php';
+
 
 class Application
 {
@@ -46,7 +48,9 @@ class Application
         $this->vacation_end = $data['vacation_end'] ?? $this->vacation_end;
         $this->reason = $data['reason'] ?? $this->reason;
         $this->user_id = $data['user_id'] ?? $this->user_id;
-        $this->status = $data['status'] ?? $this->status;
+        if (isset($data['status']) && ApplicationStatus::is_valid($data['status'])) {
+            $this->status =  $data['status'];
+        }
         $this->created_on = $data['created_on'] ?? $this->created_on;
     }
 

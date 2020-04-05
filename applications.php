@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once 'inc/class-session.php';
 require_once 'inc/class-database.php';
+require_once 'inc/enum-application-status.php';
 
 session_start();
 
@@ -34,9 +35,9 @@ if (!Session::is_logged_in() || !Session::is_employee()) {
         $user_applications = Database::get_applications_of_user($user_id);
         foreach ($user_applications as $application) {
             $status = $application->get_status();
-            if ($status == 'approved') {
+            if ($status == ApplicationStatus::APPROVED) {
                 $class = 'table-success';
-            } else if ($status == 'rejected') {
+            } else if ($status == ApplicationStatus::REJECTED) {
                 $class = 'table-danger';
             } else {
                 $class = '';
@@ -48,7 +49,7 @@ if (!Session::is_logged_in() || !Session::is_employee()) {
             <tr class="<?= $class ?>">
                 <td><?= $application->get_created_on() ?></td>
                 <td><?= "{$vacation_start_converted} to {$vacation_end_converted}" ?></td>
-                <td><?= $status ?></td>
+                <td><?= ucfirst($status) ?></td>
             </tr>
 
         <?php } ?>
