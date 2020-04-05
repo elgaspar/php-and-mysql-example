@@ -16,4 +16,26 @@ class Utilities
             return null;
         }
     }
+
+    //Returns error msg on failure, or null on success
+    public static function review_application(int $application_id, bool $approve, string $token): ?string
+    {
+        $application = Database::get_application($application_id);
+        if (!$application) {
+            return 'Invalid application ID.';
+        }
+
+        if ($approve) {
+            $succeed = $application->approve($token);
+        } else {
+            $succeed = $application->reject($token);
+        }
+
+        if (!$succeed) {
+            return 'Invalid token.';
+        }
+
+        Database::update_application($application);
+        return null;
+    }
 }

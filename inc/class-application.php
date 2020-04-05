@@ -13,6 +13,7 @@ class Application
     private string $reason;
     private int $user_id;
     private string $status;
+    private string $approval_token;
     private string $created_on;
 
     public function __construct(array $data)
@@ -23,6 +24,7 @@ class Application
         $this->reason = '';
         $this->user_id = -1;
         $this->status = '';
+        $this->approval_token = bin2hex(random_bytes(16));
         $this->created_on = '';
 
         $this->set_data_array($data);
@@ -37,6 +39,7 @@ class Application
             'reason' => $this->reason,
             'user_id' => $this->user_id,
             'status' => $this->status,
+            'approval_token' => $this->approval_token,
             'created_on' => $this->created_on
         );
     }
@@ -51,7 +54,28 @@ class Application
         if (isset($data['status']) && ApplicationStatus::is_valid($data['status'])) {
             $this->status =  $data['status'];
         }
+        $this->approval_token = $data['approval_token'] ?? $this->approval_token;
         $this->created_on = $data['created_on'] ?? $this->created_on;
+    }
+
+    public function approve(string $approval_token): bool
+    {
+        if ($this->approval_token && $this->approval_token == $approval_token) {
+            $this->status = ApplicationStatus::APPROVED;
+            $this->approval_token = '';
+            return true;
+        }
+        return false;
+    }
+
+    public function reject(string $approval_token): bool
+    {
+        if ($this->approval_token && $this->approval_token == $approval_token) {
+            $this->status = ApplicationStatus::REJECTED;
+            $this->approval_token = '';
+            return true;
+        }
+        return false;
     }
 
     public function get_id(): int
@@ -82,6 +106,11 @@ class Application
     public function get_status(): string
     {
         return $this->status;
+    }
+
+    public function get_approval_token(): string
+    {
+        return $this->approval_token;
     }
 
     public function get_created_on(): string

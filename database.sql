@@ -14,5 +14,6 @@ vacation_end DATE NOT NULL,
 reason VARCHAR(255) NOT NULL,
 user_id INT(6) NOT NULL,
 status VARCHAR(8) NOT NULL DEFAULT 'pending',
+approval_token VARCHAR(32),
 created_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

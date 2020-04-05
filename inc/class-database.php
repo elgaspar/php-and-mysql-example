@@ -103,10 +103,28 @@ class Database
         $results->close();
     }
 
+    public static function get_application(int $application_id): ?Application
+    {
+        $connection = self::connect();
+        $query = "SELECT id, created_on, vacation_start, vacation_end, user_id, status, approval_token FROM applications WHERE id = ?";
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("i", $application_id);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        $results_array = $results->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        if (count($results_array)) {
+            $application_array = $results_array[0];
+            return new Application($application_array);
+        }
+        return null;
+    }
+
     public static function get_applications_of_user(int $user_id): array
     {
         $connection = self::connect();
-        $query = "SELECT created_on, vacation_start, vacation_end, status FROM applications WHERE user_id = ? ORDER BY created_on DESC";
+        $query = "SELECT id, created_on, vacation_start, vacation_end, status, approval_token FROM applications WHERE user_id = ? ORDER BY created_on DESC";
         $stmt = $connection->prepare($query);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
@@ -123,18 +141,39 @@ class Database
         return $applications;
     }
 
-    public static function add_application(Application $application): void
+    public static function update_application(Application $application): void
     {
         $connection = self::connect();
-        $query = "INSERT INTO applications (vacation_start, vacation_end, reason, user_id) VALUES (?, ?, ?, ?)";
+        $query = "UPDATE applications SET vacation_start=?, vacation_end=?, reason=?, user_id=?, status=?, approval_token=? WHERE id=?";
         $results = $connection->prepare($query);
         $values = $application->get_data_array();
         $results->bind_param(
-            "sssi",
+            "sssissi",
             $values['vacation_start'],
             $values['vacation_end'],
             $values['reason'],
             $values['user_id'],
+            $values['status'],
+            $values['approval_token'],
+            $values['id'],
+        );
+        $results->execute();
+        $results->close();
+    }
+
+    public static function add_application(Application $application): void
+    {
+        $connection = self::connect();
+        $query = "INSERT INTO applications (vacation_start, vacation_end, reason, user_id, approval_token) VALUES (?, ?, ?, ?, ?)";
+        $results = $connection->prepare($query);
+        $values = $application->get_data_array();
+        $results->bind_param(
+            "sssis",
+            $values['vacation_start'],
+            $values['vacation_end'],
+            $values['reason'],
+            $values['user_id'],
+            $values['approval_token'],
         );
         $results->execute();
         $results->close();
