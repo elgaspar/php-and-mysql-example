@@ -16,14 +16,12 @@ session_start();
             <div class="alert alert-danger" role="alert">
                 Invalid e-mail/password.
             </div>
-        <?php }
-        unset($_SESSION["login_error"]);
-        ?>
+        <?php } ?>
 
         <form action="authenticate.php" method="post">
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input type="text" class="form-control" id="email" name="email">
+                <input type="email" class="form-control" id="email" name="email" value=<?= $_SESSION["login_error_email"] ?? '' ?>>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
@@ -36,3 +34,8 @@ session_start();
 </div>
 
 <?php include 'template-end.php'; ?>
+
+
+<?php
+unset($_SESSION["login_error_email"]);
+unset($_SESSION["login_error"]);

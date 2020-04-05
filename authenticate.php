@@ -28,6 +28,7 @@ if ($user) {
     header('Location: applications.php');
     exit;
 } else {
+    $_SESSION['login_error_email'] = $email;
     $_SESSION['login_error'] = true;
 
     header('Location: login.php');
