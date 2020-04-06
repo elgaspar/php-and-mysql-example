@@ -24,11 +24,11 @@ class User
         $this->password_hash = '';
         $this->is_admin = false;
 
-        $this->set_data_array($data);
+        $this->set_properties($data);
     }
 
 
-    public function get_data_array(): array
+    public function get_properties(): array
     {
         return array(
             'id' => $this->id,
@@ -40,7 +40,7 @@ class User
         );
     }
 
-    public function set_data_array(array $data): void
+    public function set_properties(array $data): void
     {
         $this->id = $data['id'] ?? $this->id;
         $this->first_name = $data['first_name'] ?? $this->first_name;

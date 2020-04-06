@@ -15,7 +15,7 @@ if (!Session::is_logged_in() || !Session::is_employee()) {
     exit;
 }
 
-if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reason'])) {
+if (isset($_POST['date_from'], $_POST['date_to'], $_POST['reason'])) {
     $new_application_data = array(
         'vacation_start' =>  $_POST['date_from'],
         'vacation_end' => $_POST['date_to'],

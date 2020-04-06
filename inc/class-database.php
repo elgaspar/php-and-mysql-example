@@ -12,7 +12,6 @@ class Database
     public static function get_user(int $id): ?User
     {
         $connection = self::connect();
-
         $stmt = $connection->prepare("SELECT id, password_hash, first_name, last_name, email, is_admin FROM users WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -69,7 +68,7 @@ class Database
         $connection = self::connect();
         $query = "UPDATE users SET first_name=?, last_name=?, email=?, password_hash=?, is_admin=? WHERE id=?";
         $results = $connection->prepare($query);
-        $values = $user->get_data_array();
+        $values = $user->get_properties();
         $results->bind_param(
             "ssssii",
             $values['first_name'],
@@ -88,7 +87,7 @@ class Database
         $connection = self::connect();
         $query = "INSERT INTO users (first_name, last_name, email, password_hash, is_admin) VALUES (?, ?, ?, ?, ?)";
         $results = $connection->prepare($query);
-        $values = $user->get_data_array();
+        $values = $user->get_properties();
         $results->bind_param(
             "ssssi",
             $values['first_name'],
@@ -145,7 +144,7 @@ class Database
         $connection = self::connect();
         $query = "UPDATE applications SET vacation_start=?, vacation_end=?, reason=?, user_id=?, status=?, approval_token=? WHERE id=?";
         $results = $connection->prepare($query);
-        $values = $application->get_data_array();
+        $values = $application->get_properties();
         $results->bind_param(
             "sssissi",
             $values['vacation_start'],
@@ -165,7 +164,7 @@ class Database
         $connection = self::connect();
         $query = "INSERT INTO applications (vacation_start, vacation_end, reason, user_id, approval_token) VALUES (?, ?, ?, ?, ?)";
         $results = $connection->prepare($query);
-        $values = $application->get_data_array();
+        $values = $application->get_properties();
         $results->bind_param(
             "sssis",
             $values['vacation_start'],

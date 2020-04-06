@@ -27,10 +27,10 @@ class Application
         $this->approval_token = bin2hex(random_bytes(16));
         $this->created_on = '';
 
-        $this->set_data_array($data);
+        $this->set_properties($data);
     }
 
-    public function get_data_array(): array
+    public function get_properties(): array
     {
         return array(
             'id' => $this->id,
@@ -44,7 +44,7 @@ class Application
         );
     }
 
-    public function set_data_array(array $data): void
+    public function set_properties(array $data): void
     {
         $this->id = $data['id'] ?? $this->id;
         $this->vacation_start = $data['vacation_start'] ?? $this->vacation_start;

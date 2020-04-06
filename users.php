@@ -19,7 +19,6 @@ if (!Session::is_logged_in() || !Session::is_admin()) {
 <h3 class="text-center mb-4">Users</h3>
 <a class="btn btn-primary mb-2" href="user-form.php" role="button">Create User</a>
 
-
 <table class="table">
     <thead class="thead-dark">
         <tr>

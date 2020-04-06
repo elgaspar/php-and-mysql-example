@@ -20,12 +20,7 @@ if ($user_id) {
     $user = Database::get_user($user_id);
 }
 
-if (
-    isset($_POST['first_name']) &&
-    isset($_POST['last_name']) &&
-    isset($_POST['email']) &&
-    isset($_POST['user_type'])
-) {
+if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['user_type'])) {
     $new_user_data = array(
         'first_name' => $_POST['first_name'],
         'last_name' => $_POST['last_name'],
@@ -37,10 +32,10 @@ if (
     }
 
     if (isset($user)) {
-        $user->set_data_array($new_user_data);
+        $user->set_properties($new_user_data);
         Database::update_user($user);
 
-        //if admin edits himself we update $_SESSION['is_admin'] in case he selected employee user type
+        //if admin edits himself we update $_SESSION['is_admin'] in case he changed his user-type to employee
         if ($user->get_id() == $_SESSION['id']) {
             $_SESSION['is_admin'] = $new_user_data['is_admin'];
         }
@@ -53,8 +48,6 @@ if (
     exit;
 }
 
-
-
 if (isset($user)) {
     $first_name = $user->get_first_name();
     $last_name = $user->get_last_name();
@@ -65,7 +58,6 @@ if (isset($user)) {
 
 
 <?php include 'template-start.php'; ?>
-
 
 <h3 class="text-center mb-4"><?= isset($user) ? 'Edit' : 'Create' ?> User</h3>
 

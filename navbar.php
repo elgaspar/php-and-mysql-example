@@ -1,8 +1,3 @@
-<?php
-
-declare(strict_types=1);
-?>
-
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand mx-auto" href="index.php">PHP and MySQL Example</a>
 
