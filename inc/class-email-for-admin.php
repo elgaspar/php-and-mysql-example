@@ -46,7 +46,7 @@ class EmailForAdmin extends Email
             "</body></html>";
     }
 
-    private function generate_review_url(Application $application, bool $approve)
+    private function generate_review_url(Application $application, bool $approve): string
     {
         $base_url = $_SERVER['SERVER_NAME'];
         $id = $application->get_id();

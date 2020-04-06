@@ -180,7 +180,7 @@ class Database
 
 
 
-    private static function connect()
+    private static function connect(): object
     {
         $config = Utilities::get_config();
 
