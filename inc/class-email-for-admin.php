@@ -34,7 +34,7 @@ class EmailForAdmin extends Email
 
         $vacation_start_converted = date('d-m-Y', strtotime($application->get_vacation_start()));
         $vacation_end_converted = date('d-m-Y', strtotime($application->get_vacation_end()));
-        $reason = $application->get_reason();
+        $reason = htmlspecialchars($application->get_reason());
 
         return "<html><body>" .
             "Dear supervisor,<br><br>" .

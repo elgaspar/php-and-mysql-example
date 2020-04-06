@@ -7,7 +7,7 @@ An example of a web application using:
 
 
 ## The problem
-You work for a company that has tripled in size over the past few years and the way the vacation process works is no longer efficient, as it requires a combination of hand written applications, approvals, storage and maintenace. You are asked to create a portal where employees can request their cavaction online, the manager receives a notification to approve or decline that request, and the information (time used, balances) is stored withing the portal.
+You work for a company that has tripled in size over the past few years and the way the vacation process works is no longer efficient, as it requires a combination of handwritten applications, approvals, storage, and maintenance. You are asked to create a portal where employees can request their vacation online, the manager receives a notification to approve or decline that request, and the information (time used, balances) is stored within the portal.
 
 
 ## Database
@@ -23,4 +23,4 @@ You work for a company that has tripled in size over the past few years and the 
 * *db_host*: Hostname or IP address of MySQL server.
 * *db_user*, *db_password*: Username and password that will be used to connect to MySQL server.
 * *db_name*: Database name.
-* *admin_email*: Administrator's e-mail that will be receiving the e-mails to approve/reject the employee's applications 
+* *admin_email*: Administrator's e-mail that will be receiving the e-mails to approve/reject the employee's applications 
