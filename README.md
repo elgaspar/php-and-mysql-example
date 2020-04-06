@@ -14,7 +14,7 @@ You work for a company that has tripled in size over the past few years and the 
 `database.sql` file contains the SQL statements to create the database tables.
 
 ### EER Diagram
-![alt text](eer diagram.png "EER Diagram")
+![alt text](https://github.com/elgaspar/php-and-mysql-example/blob/master/eer_diagram.png "EER Diagram")
 
 
 ## Configuration File
