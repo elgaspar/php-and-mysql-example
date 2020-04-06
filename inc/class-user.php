@@ -57,6 +57,11 @@ class User
         return $this->id;
     }
 
+    public function set_id(int $new_id): void
+    {
+        $this->id = $new_id;
+    }
+
     public function get_first_name(): string
     {
         return $this->first_name;

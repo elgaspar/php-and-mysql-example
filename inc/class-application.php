@@ -83,6 +83,11 @@ class Application
         return $this->id;
     }
 
+    public function set_id(int $new_id): void
+    {
+        $this->id = $new_id;
+    }
+
     public function get_vacation_start(): string
     {
         return $this->vacation_start;

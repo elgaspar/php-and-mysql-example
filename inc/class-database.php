@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 require_once 'class-user.php';
 require_once 'class-application.php';
+require_once 'class-utilities.php';
 
 
 class Database
 {
-    const CONFIG_FILE = 'config.ini';
-
-
     public static function get_user(int $id): ?User
     {
         $connection = self::connect();
@@ -101,6 +99,7 @@ class Database
         );
         $results->execute();
         $results->close();
+        $user->set_id($connection->insert_id);
     }
 
     public static function get_application(int $application_id): ?Application
@@ -177,13 +176,14 @@ class Database
         );
         $results->execute();
         $results->close();
+        $application->set_id($connection->insert_id);
     }
 
 
 
     private static function connect()
     {
-        $config = parse_ini_file(self::CONFIG_FILE);
+        $config = Utilities::get_config();
 
         $connection = mysqli_connect(
             $config['db_host'],

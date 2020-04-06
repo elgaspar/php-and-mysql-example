@@ -7,6 +7,8 @@ session_start();
 require_once 'inc/class-session.php';
 require_once 'inc/class-application.php';
 require_once 'inc/class-database.php';
+require_once 'inc/class-mail-sender.php';
+
 
 if (!Session::is_logged_in() || !Session::is_employee()) {
     header('Location: index.php');
@@ -24,7 +26,8 @@ if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reas
     $application = new Application($new_application_data);
     Database::add_application($application);
 
-    //TODO: send e-mail to administrator for approving/rejection
+    $full_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
+    MailSender::to_admin($application, $full_name);
 
     header('Location: applications.php');
     exit;
