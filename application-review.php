@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once 'inc/class-utilities.php';
 require_once 'inc/class-database.php';
-require_once 'inc/class-mail-sender.php';
+require_once 'inc/class-email-for-employee.php';
 
 
 if (isset($_GET['id']) && isset($_GET['approve']) && isset($_GET['token'])) {
@@ -17,7 +17,9 @@ if (isset($_GET['id']) && isset($_GET['approve']) && isset($_GET['token'])) {
     if (!$error_msg) {
         $success_msg = "Application was <b>" . ($approve ? 'approved' : 'rejected') . "</b>. Employee will be notified by e-mail.";
         $employee = Database::get_user($application->get_user_id());
-        MailSender::to_employee($application, $approve, $employee->get_email());
+
+        $email = new EmailForEmployee($application, $approve, $employee->get_email());
+        $email->send();
     }
 } else {
     $error_msg = 'Invalid URL.';

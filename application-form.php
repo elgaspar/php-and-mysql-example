@@ -7,7 +7,7 @@ session_start();
 require_once 'inc/class-session.php';
 require_once 'inc/class-application.php';
 require_once 'inc/class-database.php';
-require_once 'inc/class-mail-sender.php';
+require_once 'inc/class-email-for-admin.php';
 
 
 if (!Session::is_logged_in() || !Session::is_employee()) {
@@ -27,7 +27,8 @@ if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reas
     Database::add_application($application);
 
     $full_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
-    MailSender::to_admin($application, $full_name);
+    $email = new EmailForAdmin($application, $full_name);
+    $email->send();
 
     header('Location: applications.php');
     exit;
@@ -36,7 +37,6 @@ if (isset($_POST['date_from']) && isset($_POST['date_to']) && isset($_POST['reas
 
 
 <?php include 'template-start.php'; ?>
-
 
 <h3 class="text-center mb-4">Submit Application</h3>
 
