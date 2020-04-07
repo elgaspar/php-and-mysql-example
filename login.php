@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once 'inc/class-utilities.php';
+require_once 'inc/class-session.php';
 
 session_start();
 
@@ -12,12 +13,13 @@ if (isset($_POST['email'], $_POST['password'])) {
 
     $user = Utilities::user_login($email, $password);
     if ($user) {
-        $_SESSION['logged_in'] = true;
-        $_SESSION['id'] = $user->get_id();
-        $_SESSION['email'] = $user->get_email();
-        $_SESSION['first_name'] = $user->get_first_name();
-        $_SESSION['last_name'] = $user->get_last_name();
-        $_SESSION['is_admin'] = $user->is_admin();
+        Session::set_logged_in_user($user);
+        // $_SESSION['logged_in'] = true;
+        // $_SESSION['id'] = $user->get_id();
+        // $_SESSION['email'] = $user->get_email();
+        // $_SESSION['first_name'] = $user->get_first_name();
+        // $_SESSION['last_name'] = $user->get_last_name();
+        // $_SESSION['is_admin'] = $user->is_admin();
 
         header('Location: applications.php');
         exit;

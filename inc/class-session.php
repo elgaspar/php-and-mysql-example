@@ -5,6 +5,21 @@ declare(strict_types=1);
 
 class Session
 {
+    public static function set_logged_in_user(User $user): void
+    {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['id'] = $user->get_id();
+        $_SESSION['email'] = $user->get_email();
+        $_SESSION['first_name'] = $user->get_first_name();
+        $_SESSION['last_name'] = $user->get_last_name();
+        $_SESSION['is_admin'] = $user->is_admin();
+    }
+
+    public static function clear_logged_in_user(): void
+    {
+        $_SESSION = array();
+        session_destroy();
+    }
 
     public static function is_logged_in(): bool
     {

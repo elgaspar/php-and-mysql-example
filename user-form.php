@@ -35,9 +35,13 @@ if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['us
         $user->set_properties($new_user_data);
         Database::update_user($user);
 
-        //if admin edits himself we update $_SESSION['is_admin'] in case he changed his user-type to employee
+        //if admin edits himself we update session saved values
         if ($user->get_id() == $_SESSION['id']) {
-            $_SESSION['is_admin'] = $new_user_data['is_admin'];
+            Session::set_logged_in_user($user);
+            // $_SESSION['email'] = $new_user_data['email'];
+            // $_SESSION['first_name'] = $new_user_data['first_name'];
+            // $_SESSION['last_name'] = $new_user_data['last_name'];
+            // $_SESSION['is_admin'] = $new_user_data['is_admin'];
         }
     } else {
         $user = new User($new_user_data);
@@ -97,7 +101,7 @@ if (isset($user)) {
 
             <a class="btn btn-secondary form-button" href="users.php" role="button">Back</a>
 
-            <button type="submit" class="btn btn-primary float-right w-10 form-button">Create</button>
+            <button type="submit" class="btn btn-primary float-right w-10 form-button"><?= isset($user) ? 'Update' : 'Create' ?></button>
 
         </form>
 

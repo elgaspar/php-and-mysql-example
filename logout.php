@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+require_once 'inc/class-session.php';
+
 session_start();
-$_SESSION = array();
-session_destroy();
+Session::clear_logged_in_user();
 
 header('Location: index.php');
 exit;
