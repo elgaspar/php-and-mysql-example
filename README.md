@@ -23,7 +23,7 @@ You work for a company that has tripled in size over the past few years and the 
     ```
     INSERT INTO users (first_name, last_name, email, password_hash, is_admin) VALUES ('John', 'Doe', 'admin@mail.com', '$2y$10$ExUqrgC2jjBAlMiqqfLICeq7TBw2AUcHDVsXIH3dii50NmDeF6GTK', '1')
     ```
-* Set the variables in the [configuration file](##Configuration-File)
+* Set the variables in the [configuration file](#configuration-file)
 
 
 ## Configuration File
