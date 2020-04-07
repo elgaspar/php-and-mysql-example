@@ -5,6 +5,22 @@ declare(strict_types=1);
 
 class Session
 {
+    public function __construct()
+    {
+        session_start();
+    }
+
+    public function destroy(): void
+    {
+        $_SESSION = array();
+        session_destroy();
+    }
+
+    public static function get($key)
+    {
+        return $_SESSION[$key] ?? null;
+    }
+
     public static function set_logged_in_user(User $user): void
     {
         $_SESSION['logged_in'] = true;
@@ -13,12 +29,6 @@ class Session
         $_SESSION['first_name'] = $user->get_first_name();
         $_SESSION['last_name'] = $user->get_last_name();
         $_SESSION['is_admin'] = $user->is_admin();
-    }
-
-    public static function clear_logged_in_user(): void
-    {
-        $_SESSION = array();
-        session_destroy();
     }
 
     public static function is_logged_in(): bool

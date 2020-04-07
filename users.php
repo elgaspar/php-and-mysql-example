@@ -5,9 +5,9 @@ declare(strict_types=1);
 require_once 'inc/class-session.php';
 require_once 'inc/class-database.php';
 
-session_start();
+$session = new Session();
 
-if (!Session::is_logged_in() || !Session::is_admin()) {
+if (!$session->is_logged_in() || !$session->is_admin()) {
     header('Location: index.php');
     exit;
 }
@@ -31,7 +31,7 @@ if (!Session::is_logged_in() || !Session::is_admin()) {
     <tbody>
 
         <?php
-        $user_id = $_SESSION['id'];
+        $user_id = $session->get('id');
         $all_users = Database::get_all_users();
         foreach ($all_users as $user) {
             $onclick = "window.location='user-form.php?id={$user->get_id()}';";

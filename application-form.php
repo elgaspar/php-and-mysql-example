@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-session_start();
-
 require_once 'inc/class-session.php';
 require_once 'inc/class-application.php';
 require_once 'inc/class-database.php';
 require_once 'inc/class-email-for-admin.php';
 
+$session = new Session();
 
-if (!Session::is_logged_in() || !Session::is_employee()) {
+
+if (!$session->is_logged_in() || !$session->is_employee()) {
     header('Location: index.php');
     exit;
 }
@@ -20,13 +20,13 @@ if (isset($_POST['date_from'], $_POST['date_to'], $_POST['reason'])) {
         'vacation_start' =>  $_POST['date_from'],
         'vacation_end' => $_POST['date_to'],
         'reason' => $_POST['reason'],
-        'user_id' => $_SESSION['id'],
+        'user_id' => $session->get('id')
     );
 
     $application = new Application($new_application_data);
     Database::add_application($application);
 
-    $full_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
+    $full_name = $session->get('first_name') . ' ' . $session->get('last_name');
     $email = new EmailForAdmin($application, $full_name);
     $email->send();
 

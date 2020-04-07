@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-session_start();
-
 require_once 'inc/class-session.php';
 require_once 'inc/class-database.php';
 require_once 'inc/class-user.php';
 require_once 'inc/enum-user-type.php';
 
+$session = new Session();
 
-if (!Session::is_logged_in() || !Session::is_admin()) {
+if (!$session->is_logged_in() || !$session->is_admin()) {
     header('Location: index.php');
     exit;
 }
@@ -36,12 +35,8 @@ if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['us
         Database::update_user($user);
 
         //if admin edits himself we update session saved values
-        if ($user->get_id() == $_SESSION['id']) {
-            Session::set_logged_in_user($user);
-            // $_SESSION['email'] = $new_user_data['email'];
-            // $_SESSION['first_name'] = $new_user_data['first_name'];
-            // $_SESSION['last_name'] = $new_user_data['last_name'];
-            // $_SESSION['is_admin'] = $new_user_data['is_admin'];
+        if ($user->get_id() == $session->get('id')) {
+            $session->set_logged_in_user($user);
         }
     } else {
         $user = new User($new_user_data);

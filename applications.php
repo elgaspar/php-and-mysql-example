@@ -6,9 +6,10 @@ require_once 'inc/class-session.php';
 require_once 'inc/class-database.php';
 require_once 'inc/enum-application-status.php';
 
-session_start();
+$session = new Session();
 
-if (!Session::is_logged_in() || !Session::is_employee()) {
+
+if (!$session->is_logged_in() || !$session->is_employee()) {
     header('Location: index.php');
     exit;
 }
@@ -31,7 +32,7 @@ if (!Session::is_logged_in() || !Session::is_employee()) {
     <tbody>
 
         <?php
-        $user_id = $_SESSION['id'];
+        $user_id = $session->get('id');
         $user_applications = Database::get_applications_of_user($user_id);
         foreach ($user_applications as $application) {
             $status = $application->get_status();

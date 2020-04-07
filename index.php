@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 require_once 'inc/class-session.php';
 
-session_start();
+$session = new Session();
 
-if (!Session::is_logged_in()) {
+if (!$session->is_logged_in()) {
     header('Location: login.php');
     exit;
 }
 
-if (Session::is_admin()) {
+if ($session->is_admin()) {
     header('Location: users.php');
     exit;
 }
