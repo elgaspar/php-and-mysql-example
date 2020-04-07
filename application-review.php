@@ -5,6 +5,9 @@ declare(strict_types=1);
 require_once 'inc/class-utilities.php';
 require_once 'inc/class-database.php';
 require_once 'inc/class-email-for-employee.php';
+require_once 'inc/class-session.php';
+
+$session = new Session();
 
 
 if (isset($_GET['id']) && isset($_GET['approve']) && isset($_GET['token'])) {
@@ -25,8 +28,6 @@ if (isset($_GET['id']) && isset($_GET['approve']) && isset($_GET['token'])) {
     $error_msg = 'Invalid URL.';
 }
 ?>
-
-
 <?php include 'template-start.php'; ?>
 
 <h3 class="text-center mb-4">Application Review</h3>

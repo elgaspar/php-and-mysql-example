@@ -1,9 +1,3 @@
-<?php
-require_once 'inc/class-session.php';
-
-$session = new Session();
-?>
-
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand mx-auto" href="index.php">PHP and MySQL Example</a>
 

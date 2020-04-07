@@ -1,3 +1,10 @@
+<?php
+require_once 'inc/class-session.php';
+
+$session = new Session();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
