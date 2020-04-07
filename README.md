@@ -17,6 +17,15 @@ You work for a company that has tripled in size over the past few years and the 
 ![alt text](https://github.com/elgaspar/php-and-mysql-example/blob/master/eer_diagram.png "EER Diagram")
 
 
+## Installation
+* Run `database.sql` file in MySQL server to create tables.
+* Add an administrator user with e-mail `admin@mail.com` and password `123` using the query:
+    ```
+    INSERT INTO users (first_name, last_name, email, password_hash, is_admin) VALUES ('John', 'Doe', 'admin@mail.com', '$2y$10$ExUqrgC2jjBAlMiqqfLICeq7TBw2AUcHDVsXIH3dii50NmDeF6GTK', '1')
+    ```
+* Set the variables in the [configuration file](##Configuration-File)
+
+
 ## Configuration File
 `config.ini` file contains the essential variables that should be set:
 
